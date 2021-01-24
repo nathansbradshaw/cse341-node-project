@@ -11,6 +11,16 @@ exports.getProducts = (req, res, next) => {
   });
 };
 
+exports.getFeaturedProducts = (req, res, next) => {
+  Product.fetchAll(products => {
+    res.render('shop/product-list', {
+      prods: products,
+      pageTitle: 'All Products',
+      path: '/products'
+    });
+  });
+};
+
 exports.getProduct = (req, res, next) => {
   const prodId = req.params.productId;
   Product.findById(prodId, product => {
@@ -21,6 +31,7 @@ exports.getProduct = (req, res, next) => {
     });
   });
 };
+
 
 exports.getIndex = (req, res, next) => {
   Product.fetchAll(products => {
@@ -65,6 +76,14 @@ exports.postCartDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
   Product.findById(prodId, product => {
     Cart.deleteProduct(prodId, product.price);
+    res.redirect('/cart');
+  });
+};
+
+exports.postCartAddProduct = (req, res, next) => {
+  const prodId = req.body.productId;
+  Product.findById(prodId, product => {
+    Cart.addProduct(prodId, product.price);
     res.redirect('/cart');
   });
 };

@@ -6,18 +6,32 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js",
+    "watch": "nodemon --ext js,pug,ejs,css,scss",
+    "build": "npm run build-sass",
+    "build-sass": "node-sass -o public/css public/sass/main.scss ",
+    "watch-css": "nodemon -e scss -x \"npm run build-sass\"",
     "start-server": "node app.js"
   },
   "author": "Maximilian Schwarzmüller",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^1.18.3"
+    "browser-sync": "^2.26.13",
+    "gulp": "^4.0.2",
+    "gulp-connect": "^5.7.0",
+    "gulp-livereload": "^4.0.2",
+    "gulp-nodemon": "^2.5.0",
+    "gulp-sass": "^4.1.0",
+    "node-sass": "^5.0.0",
+    "nodemon": "^1.19.4"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
+    "bulma": "^0.9.1",
+    "connect-livereload": "^0.6.1",
     "ejs": "^2.6.1",
     "express": "^4.16.3",
     "express-handlebars": "^3.0.0",
+    "livereload": "^0.9.1",
     "pug": "^2.0.3"
   }
 }
