@@ -7,9 +7,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js",
     "watch": "nodemon --ext js,pug,ejs,css,scss",
-    "build": "npm run build-sass",
-    "build-sass": "node-sass -o public/css public/sass/main.scss ",
-    "watch-css": "nodemon -e scss -x \"npm run build-sass\"",
     "start-server": "node app.js"
   },
   "author": "Maximilian Schwarzmüller",
