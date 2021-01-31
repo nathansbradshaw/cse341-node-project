@@ -6,8 +6,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const uri = process.env.MONGODB_URL || (process.env.URI).toString();
-const adminID = (process.env.ADMIN_ID).toString();
+const uri = process.env.MONGODB_URL || (process.env.URI);
+const adminID = (process.env.ADMIN_ID) || '601202c52d39e2426491f911';
 
 const PORT = process.env.PORT || 5000 // So we can run on heroku || (OR) localhost:5000
 const publicDirectory = path.join(__dirname, 'public');
