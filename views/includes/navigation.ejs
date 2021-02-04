@@ -15,19 +15,32 @@
         <div class="navbar-item">
             <a class="navbar-item <%= path === '/' ? 'active' : '' %>" href="/">Shop</a>
             <a class="navbar-item <%= path === '/products' ? 'active' : '' %>" href="/products">Products</a>
-            <a class="navbar-item <%= path === '/cart' ? 'active' : '' %>" href="/cart">Cart</a>
-            <a class="navbar-item <%= path === '/orders' ? 'active' : '' %>" href="/orders">Orders</a>
+            <% if (isAuthenticated) { %>
+                <a class="navbar-item <%= path === '/cart' ? 'active' : '' %>" href="/cart">Cart</a>
+                <a class="navbar-item <%= path === '/orders' ? 'active' : '' %>" href="/orders">Orders</a>
+                <% } %>
         </div>
 
         <div class="navbar-end">
             <div class="navbar-item">
-                <a class="navbar-item <%= path === '/admin/add-product' ? 'active' : '' %>"
-                    href="/admin/add-product">Add
-                    Product
-                </a>
-                <a class=" navbar-item <%= path === '/admin/products' ? 'active' : '' %>" href="/admin/products">Admin
-                    Products
-                </a>
+                <% if (isAuthenticated) { %>
+                    <a class="navbar-item <%= path === '/admin/add-product' ? 'active' : '' %>"
+                        href="/admin/add-product">Add
+                        Product
+                    </a>
+                    <a class=" navbar-item <%= path === '/admin/products' ? 'active' : '' %>"
+                        href="/admin/products">Admin
+                        Products
+                    </a>
+                    <form class=" navbar-tem" action="/logout" method="post">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <button class="button navbar-item">Logout</button> </form>
+                    <% } else { %>
+                        <a class=" navbar-item <%= path === '/login' ? 'active' : '' %>" href="/login">login </a>
+                        <a class=" navbar-item <%= path === '/signup' ? 'active' : '' %>" href="/signup">signup 
+                        
+                        </a>
+                        <% } %>
             </div>
         </div>
     </div>

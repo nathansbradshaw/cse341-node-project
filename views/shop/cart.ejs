@@ -4,70 +4,77 @@
     <body>
         <%- include('../includes/navigation.ejs') %>
             <% let price=0; %>
-            <%var round = function (num, precision) {
-                num = parseFloat(num);
-                if (!precision) return num;
-                return (Math.round(num / precision) * precision);
-            }; %>
-                <main>
-                    <div class="tile is-ancestor">
-                        <div class="tile is-6 is-vertical is-parent">
-                            <div class="tile is-child is-5">
-                                <% console.log("products" + products); if (products.length> 0) { %>
-                                    <ul>
-                                        <% products.forEach(p=> { %>
-                                            <li class=" mt-2 px-2 py-2">
-                                                <div class="card">
-                                                    <header class="card-header">
-                                                        <p class="card-header-title">
-                                                            <%= p.productId.title %> (<%= p.quantity %>)
-                                                        </p>
-                                                    </header>
+                <%var round=function (num, precision) { num=parseFloat(num); if (!precision) return num; return
+                    (Math.round(num / precision) * precision); }; %>
+                    <main>
+                        <div class="tile is-ancestor">
+                            <div class="tile is-6 is-vertical is-parent">
+                                <div class="tile is-child is-5">
+                                    <% console.log("products" + products); if (products.length> 0) { %>
+                                        <ul>
+                                            <% products.forEach(p=> { %>
+                                                <li class=" mt-2 px-2 py-2">
+                                                    <div class="card">
+                                                        <header class="card-header">
+                                                            <p class="card-header-title">
+                                                                <%= p.productId.title %> (<%= p.quantity %>)
+                                                            </p>
+                                                        </header>
 
-                                                    <div class="card-image">
-                                                        <figure class="image is-4by3">
-                                                            <img src="<%= p.productId.imageUrl %>"
-                                                                alt="<%= p.title %>">
-                                                        </figure>
+                                                        <div class="card-image">
+                                                            <figure class="image is-4by3">
+                                                                <img src="<%= p.productId.imageUrl %>"
+                                                                    alt="<%= p.title %>">
+                                                            </figure>
+                                                        </div>
+
+                                                        <footer class="card-footer">
+                                                            <form action="/cart-delete-item" method="POST"
+                                                                class="card-footer-item">
+                                                                <input type="hidden" value="<%= p.productId._id %>"
+                                                                    name="productId">
+                                                                    <input type="hidden" name="_csrf"
+                                                                    value="<%= csrfToken %>">
+                                                                <button class="button is-danger"
+                                                                    type="submit">Delete</button>
+                                                            </form>
+                                                            <form action="/cart" method="POST" class="card-footer-item">
+                                                                <input type="hidden" value="<%= p.productId._id %>"
+                                                                    name="productId">
+                                                                <input type="hidden" name="_csrf"
+                                                                    value="<%= csrfToken %>">
+
+                                                                <button class="button is-primary"
+                                                                    type="submit">+1</button>
+                                                            </form>
+                                                            <p class="card-footer-item">Item Total: <%=
+                                                                    (parseFloat(p.productId.price) * p.quantity ) %>
+                                                            </p>
+                                                        </footer>
                                                     </div>
+                                                </li>
+                                                <%price +=round( (parseFloat(p.productId.price) * p.quantity),.01)}) %>
+                                        </ul>
+                                        <% } else { %>
+                                            <h1>No Products in Cart!</h1>
+                                            <% } %>
 
-                                                    <footer class="card-footer">
-                                                        <form action="/cart-delete-item" method="POST" class="card-footer-item">
-                                                            <input type="hidden" value="<%= p.productId._id %>"
-                                                                name="productId">
-                                                            <button class="button is-danger"
-                                                                type="submit">Delete</button>
-                                                        </form>                                      
-                                                        <form action="/cart" method="POST" class="card-footer-item">
-                                                            <input type="hidden" value="<%= p.productId._id %>"
-                                                                name="productId">
-                                                            <button class="button is-primary"
-                                                                type="submit">+1</button>
-                                                        </form>
-                                                        <p class="card-footer-item">Item Total: <%= (parseFloat(p.productId.price) * p.quantity )  %> </p>
-                                                    </footer>
-                                                </div>
-                                            </li>
-                                            <%price += round( (parseFloat(p.productId.price) * p.quantity),.01)}) %>
-                                    </ul>
-                                    <% } else { %>
-                                        <h1>No Products in Cart!</h1>
-                                        <% } %>
+                                </div>
 
                             </div>
+                            <div class="tile is-parent is-4 offset-2 card mt-5">
+                                <div>
+                                    <p class="is-size-1">Your total price: &nbsp; <%= price %>
+                                    </p>
+                                    <br>
+                                    <form action="/create-order" method="POST">
+                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                        <button type="submit" class="button is-primary">Order Now!</button>
+                                    </form>
+                                </div>
 
-                        </div>
-                        <div class="tile is-parent is-4 offset-2 card mt-5">
-                            <div>
-                                <p class="is-size-1">Your total price: &nbsp; <%= price %></p>
-                                <br>
-                                <form action="/create-order" method="POST">
-                                    <button type="submit" class="button is-primary">Order Now!</button>
-                                </form>
+
                             </div>
- 
-                            
                         </div>
-                    </div>
-                </main>
-                <%- include('../includes/end.ejs') %>
+                    </main>
+                    <%- include('../includes/end.ejs') %>
