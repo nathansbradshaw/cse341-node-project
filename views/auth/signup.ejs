@@ -7,34 +7,39 @@
         <%- include('../includes/navigation.ejs') %>
 
             <main>
-                <% if (errorMessage) { %>
-                    <div>
-                        <%= errorMessage %>
+                <div class="container">
+                    <div class="section">
+
+                        <% if (errorMessage) { %>
+                            <div class="box has-background-danger">
+                                <%= errorMessage %>
+                            </div>
+                            <% } %>
+                                <form class="signup-form" action="/signup" method="POST">
+                                    <div class="form-control">
+                                        <label for="fname">First Name</label>
+                                        <input type="fname" name="fname" id="fname">
+                                    </div>
+                                    <div class="form-control">
+                                        <label for="lname">Last Name</label>
+                                        <input type="lname" name="lname" id="lname">
+                                    </div>
+                                    <div class="form-control">
+                                        <label for="email">E-Mail</label>
+                                        <input type="email" name="email" id="email">
+                                    </div>
+                                    <div class="form-control">
+                                        <label for="password">Password</label>
+                                        <input type="password" name="password" id="password">
+                                    </div>
+                                    <div class="form-control">
+                                        <label for="confirmPassword">Confirm Password</label>
+                                        <input type="password" name="confirmPassword" id="confirmPassword">
+                                    </div>
+                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                    <button class="button" type="submit">Sign up</button>
+                                </form>
                     </div>
-                    <% } %>
-                        <form class="signup-form" action="/signup" method="POST">
-                            <div class="form-control">
-                                <label for="fname">First Name</label>
-                                <input type="fname" name="fname" id="fname">
-                            </div>
-                            <div class="form-control">
-                                <label for="lname">Last Name</label>
-                                <input type="lname" name="lname" id="lname">
-                            </div>
-                            <div class="form-control">
-                                <label for="email">E-Mail</label>
-                                <input type="email" name="email" id="email">
-                            </div>
-                            <div class="form-control">
-                                <label for="password">Password</label>
-                                <input type="password" name="password" id="password">
-                            </div>
-                            <div class="form-control">
-                                <label for="confirmPassword">Confirm Password</label>
-                                <input type="password" name="confirmPassword" id="confirmPassword">
-                            </div>
-                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                            <button class="button" type="submit">Sign up</button>
-                        </form>
+                </div>
             </main>
             <%- include('../includes/end.ejs') %>
