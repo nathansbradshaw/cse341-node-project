@@ -16,28 +16,42 @@
                             </div>
                             <% } %>
                                 <form class="signup-form" action="/signup" method="POST">
-                                    <div class="form-control">
-                                        <label for="fname">First Name</label>
-                                        <input type="fname" name="fname" id="fname">
+                                    <div class="field">
+                                        <label class="label" for="fname">First Name</label>
+                                        <input
+                                            class="input <%= validationErrors.find(e => e.param === 'fname') ? 'is-danger' : 'is-success' %>"
+                                            type="fname" name="fname" id="fname" value="<%= oldInput.fname %> ">
                                     </div>
-                                    <div class="form-control">
-                                        <label for="lname">Last Name</label>
-                                        <input type="lname" name="lname" id="lname">
+                                    <div class="field">
+                                        <label class="label" for="lname">Last Name</label>
+                                        <input
+                                            class="input <%= validationErrors.find(e => e.param === 'lname') ? 'is-danger' : 'is-success' %>"
+                                            type="lname" name="lname" id="lname" value="<%= oldInput.lname %>">
                                     </div>
-                                    <div class="form-control">
-                                        <label for="email">E-Mail</label>
-                                        <input type="email" name="email" id="email">
+                                    <div class="field">
+                                        <label class="label" for="email">E-Mail</label>
+                                        <input
+                                            class="input <%= validationErrors.find(e => e.param === 'email') ? 'is-danger' : 'is-success' %>"
+                                            type="email" name="email" id="email" value="<%= oldInput.email %>">
                                     </div>
-                                    <div class="form-control">
-                                        <label for="password">Password</label>
-                                        <input type="password" name="password" id="password">
+                                    <div class="field">
+                                        <label class="label" for="password">Password</label>
+                                        <input
+                                            class="input <%= validationErrors.find(e => e.param === 'password') ? 'is-danger' : 'is-success' %> 
+                                            <%= validationErrors.find(e => e.param === 'confirmPassword') ? 'is-danger' : 'is-success' %>"
+                                            type="password" name="password" id="password"
+                                            value="<%= oldInput.password %>">
                                     </div>
-                                    <div class="form-control">
-                                        <label for="confirmPassword">Confirm Password</label>
-                                        <input type="password" name="confirmPassword" id="confirmPassword">
+                                    <div class="field">
+                                        <label class="label" for="confirmPassword">Confirm Password</label>
+                                        <input
+                                            class="input <%= validationErrors.find(e => e.param === 'password') ? 'is-danger' : 'is-success' %>
+                                            <%= validationErrors.find(e => e.param === 'confirmPassword') ? 'is-danger' : 'is-success' %>"
+                                            type="password" name="confirmPassword" id="confirmPassword"
+                                            value="<%= oldInput.confirmPassword %>">
                                     </div>
                                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                    <button class="button" type="submit">Sign up</button>
+                                    <button class="button is-success" type="submit">Sign up</button>
                                 </form>
                     </div>
                 </div>

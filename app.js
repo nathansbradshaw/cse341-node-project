@@ -26,12 +26,16 @@ const store = new MongoDBStore({
 });
 const csrfProtection = csrf();
 
+
 app.set('view engine', 'ejs');
 app.set('views', 'views');
+
 
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const authRoutes = require('./routes/auth');
+
+
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -39,11 +43,16 @@ app.use(session({secret: 'my secret change me', resave: false, saveUninitialized
 app.use(csrfProtection);
 app.use(flash());
 
+
+
+
 const corsOptions = {
    origin: "https://nathan-cse341-prove.herokuapp.com/",
    optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions));
+
+
 
 const options = {
    useUnifiedTopology: true,
@@ -52,9 +61,16 @@ const options = {
    useFindAndModify: false,
    family: 4
 };
+app.use((req, res, next) => {
+   res.locals.isAuthenticated = req.session.isLoggedIn;
+   if(req.session.user) {
+      res.locals.isAdmin = req.session.user.isAdmin;
+      res.locals.username = req.session.user.fname;
+   }
 
-
-
+   res.locals.csrfToken = req.csrfToken();
+   next();
+})
 
 app.use((req, res, next) => {
    if (!req.session.user){
@@ -63,23 +79,34 @@ app.use((req, res, next) => {
 
    User.findById(req.session.user._id)
    .then(user => {
+      if(!user) {
+         return next();
+      }
       req.user = user;
       next();
    })
-   .catch(err => console.log(err));
+   .catch(err => {
+      next(new Error(err));
+   } );
 })
-app.use((req, res, next) => {
-   res.locals.isAuthenticated = req.session.isLoggedIn;
-   res.locals.csrfToken = req.csrfToken();
-   next();
-})
+
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 app.use(authRoutes);
 
+app.get('/500',errorController.get500);
+
 app.use(errorController.get404);
 
+app.use((error, req, res, next) => {
+   console.log(error);
+   res.status(500).render('500', {
+      pageTitle: 'Server Side Error', path: '/500',
+      isAuthenticated: req.session.isLoggedIn,
+      
+    });
+})
 
 mongoose.connect(uri, options).then(result => {
    app.listen(PORT, () => console.log(`Listening on ${PORT}`));

@@ -2,57 +2,72 @@
     <link rel="stylesheet" href="/css/product.css">
     </head>
 
-    <body>
+    <body class="has-background-grey-light">
         <%- include('../includes/navigation.ejs') %>
 
-            <section class="hero is-medium is-primary is-bold">
+            <section class="hero is-medium is-info is-bold">
                 <div class="hero-body">
                     <div class="container">
-                        <h1 class="title">
+                        <h1 class="title is-size-1 has-text-white">
                             "The Shop"
                         </h1>
-                        <h2 class="subtitle">
-                            Buy things at "The Shop"
+                        <h2 class="subtitle has-text-white">
+                            The place to get all that random stuff that you just don't need!
                         </h2>
                     </div>
                 </div>
             </section>
+            <div
+                class="has-text-centered has-background-info-light has-text-white box is-size-1 is-not-rounded has-shadow">
+                <h2 class="is-title  ">Our Featured Products</h2>
+            </div>
             <div class="container">
                 <div class="section">
+
                     <main class="is-primary">
+                        <div class="flex-box">
+                            <% if (prods.length> 0) { %>
+                                <div class="flex-box">
+                                    <% for (let product of prods) { %>
 
-                        <% if (prods.length> 0) { %>
-                            <div class="grid">
-                                <% for (let product of prods) { %>
-                                    <article class="card product-item">
-                                        <header class="card__header">
-                                            <h1 class="product__title">
-                                                <%= product.title %>
-                                            </h1>
-                                        </header>
-                                        <div class="image is-5by4">
-                                            <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
-                                        </div>
-                                        <div class="card__content">
-                                            <h2 class="product__price">$<%= product.price %>
-                                            </h2>
-                                            <p class="product__description">
-                                                <%= product.description %>
-                                            </p>
-                                        </div>
-                                        <div class="card__actions">
-                                            <a href="/products/<%= product._id %>" class="btn">Details</a>
-                                            <%- include('../includes/add-to-cart.ejs', {product: product}) %>
-                                        </div>
-                                        <div class="card__actions">
+                                        <div class="card product-item card-parent">
+                                            <header class="card-header">
+                                                <h1 class="card-header-title is-centered">
+                                                    <%= product.title %>
+                                                </h1>
+                                            </header>
+                                            <div class="card-image">
+                                                <figure class="image is-5by3">
+                                                <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
+                                                </figure>
+                                            </div>
+                                            <div class="card-content">
+                                                <h2 class="product-price">Price: $<%= product.price %>
+                                                </h2>
+                                                <hr>
+                                                <p class="product-description">
+                                                    <%= product.description %>
+                                                </p>
+                                            </div>
+                                            <div class=" card-footer px-1 py-1 card-flex-footer flex-spaced">
+                                                <a href="/products/<%= product._id %>"
+                                                    class="button is-info pl-1 is-centered">Details</a>
+                                                <%- include('../includes/add-to-cart.ejs', {product: product}) %>
+                                            </div>
 
                                         </div>
-                                    </article>
-                                    <% } %>
-                            </div>
-                            <% } else { %>
-                                <h1>No Products Found!</h1>
-                                <% } %>
+
+                                        <% } %>
+                                </div>
+                        </div>
+                        <% } else { %>
+                            <h1>No Products Found!</h1>
+                            <% } %>
+                                <div
+                                    class="has-text-centered has-background-info-light has-text-white box is-size-3 is-not-rouned has-shadow">
+                                    <h2 class="is-title  ">View our other products</h2>
+                                    <a href="/products" class=" button is-primary"> Go to Products Page </a>
+                                </div>
                 </div>
             </div>
             </main>

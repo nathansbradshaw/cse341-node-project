@@ -1,85 +1,106 @@
 <%- include('../includes/head.ejs') %>
     </head>
 
-    <body>
+    <body class="has-background-grey-light">
         <%- include('../includes/navigation.ejs') %>
-            <% let price=0; %>
+            <% let tprice=0; %>
                 <%var round=function (num, precision) { num=parseFloat(num); if (!precision) return num; return
                     (Math.round(num / precision) * precision); }; %>
                     <main>
-                        <div class="tile is-ancestor">
-                            <div class="tile is-9 is-vertical is-parent">
-                                <div class="tile is-child is-7">
+                        <div class="tile is-ancestor ">
+                            <div class="tile is-vertical is-parent is-8">
+                                <div class="tile is-child ">
+
+
                                     <% console.log("products" + products); if (products.length> 0) { %>
-                                        <ul>
+                                        <div class="flex-box">
                                             <% products.forEach(p=> { %>
-                                                <li class=" mt-2 px-2 py-2">
-                                                    <div class="card">
-                                                        <header class="card-header">
-                                                            <p class="card-header-title">
-                                                                <%= p.productId.title %> (<%= p.quantity %>)
-                                                            </p>
-                                                        </header>
 
-                                                        <div class="card-image">
-                                                            <figure class="image is-5by3">
-                                                                <img src="<%= p.productId.imageUrl %>"
-                                                                    alt="<%= p.title %>">
-                                                            </figure>
-                                                        </div>
+                                                <div class="card  card-parent mx-2 my-2">
+                                                    <header class="card-header">
+                                                        <p class="card-header-title">
+                                                            <%= p.productId.title %> (<%= p.quantity %>)
+                                                        </p>
+                                                    </header>
 
-                                                        <footer class="card-footer">
-                                                            <form action="/cart-delete-item" method="POST"
-                                                                class="card-footer-item">
-                                                                <input type="hidden" value="<%= p.productId._id %>"
-                                                                    name="productId">
-                                                                    <input type="hidden" name="_csrf"
-                                                                    value="<%= csrfToken %>">
-                                                                <button class="button is-danger"
-                                                                    type="submit">Delete</button>
-                                                            </form>
-                                                            <form action="/cart" method="POST" class="card-footer-item">
+                                                    <div class="card-image">
+                                                        <figure class="image is-5by3">
+                                                            <img src="<%= p.productId.imageUrl %>" alt="<%= p.title %>">
+                                                        </figure>
+                                                    </div>
+
+                                                    <div class="card-footer card-flex-footer flex-spaced">
+                                                        <form action="/cart-delete-item" method="POST"
+                                                            class="card-footer-item">
+                                                            <input type="hidden" value="<%= p.productId._id %>"
+                                                                name="productId">
+                                                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                                            <button class="button is-danger" type="submit">Remove
+                                                                All</button>
+                                                        </form>
+                                                        <div class="card-footer-item">
+
+
+                                                            <form action="/cart" method="POST" class="">
                                                                 <input type="hidden" value="<%= p.productId._id %>"
                                                                     name="productId">
                                                                 <input type="hidden" name="_csrf"
                                                                     value="<%= csrfToken %>">
 
-                                                                <button class="button is-primary"
+                                                                <button class="button is-success"
                                                                     type="submit">+1</button>
                                                             </form>
-                                                            <p class="card-footer-item">Item Total: <%=
-                                                                    (parseFloat(p.productId.price) * p.quantity ) %>
-                                                            </p>
-                                                        </footer>
-                                                    </div>
-                                                </li>
-                                                <%price +=round( (parseFloat(p.productId.price) * p.quantity),.01)}) %>
-                                        </ul>
-                                        <% } else { %>
-                                            <h1>No Products in Cart!</h1>
-                                            <% } %>
 
+                                                            
+                                                                <form action= <%= (p.quantity > 1) ? "/cart-remove-one" :  "/cart-delete-item" %>  method="POST" class="ml-3">
+                                                                    <input type="hidden" value="<%= p.productId._id %>"
+                                                                        name="productId">
+                                                                    <input type="hidden" name="_csrf"
+                                                                        value="<%= csrfToken %>">
+
+                                                                    <button class="button is-primary"
+                                                                        type="submit">-1</button>
+                                                                </form>
+
+                                                              
+                                                        </div>
+                                                        <div class="card-footer-item">
+                                                            <p>Item Total: $<%= (parseFloat(p.productId.price) *
+                                                                    p.quantity ) %>
+                                                            </p>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <%tprice +=( (parseFloat(p.productId.price) * p.quantity))}) %>
+                                        </div>
+                                        <% } else { %>
+                                            <h1 class="is-size-1 box mt-5 ml-4">No Products in Cart!</h1>
+                                            <% } %>
                                 </div>
 
                             </div>
-                            <div class="tile is-parent is-2 card mt-5">
+                            <%if (products.length > 0) {  %> 
+                            <div class="tile is-parent is-4  card my-5 mx-2">
                                 <div>
                                     <p class="is-size-1">Your Items: </p>
                                     <ul>
-                                    <%if (products.length> 0) { products.forEach(p=> { %>
-                                        <li><%= p.productId.title %> (<%= p.quantity %>)</li>
-                                        <%}) } else { %>
-                                            <li>No Products in Cart!</li>
-                                            <% } %>
-                                        </ul>
-                                    <!-- <p class="is-size-1">Your total price: &nbsp; <%= price %></p> -->
+                                        <% products.forEach(p=> { %>
+                                            <li>
+                                                <%= p.productId.title %> (<%= p.quantity %>)
+                                            </li>
+                                            <% }) %> 
+                        
+                                    </ul>
+                                    <p class="is-size-2">Your total price: &nbsp; $<%= tprice %>
+                                    </p>
                                     <br>
                                     <form action="/create-order" method="POST">
                                         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                         <button type="submit" class="button is-primary">Order Now!</button>
                                     </form>
                                 </div>
-
+                                <% } %>
 
                             </div>
                         </div>

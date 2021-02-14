@@ -2,25 +2,43 @@
     <link rel="stylesheet" href="/css/orders.css">
     </head>
 
-    <body>
+    <body class="has-background-grey-light">
         <%- include('../includes/navigation.ejs') %>
-        <main>
-            <% if (orders.length <= 0) { %>
-                <h1>Nothing there!</h1>
-            <% } else { %>
-                <ul class="orders  ">
-                    <% orders.forEach(order => { %>
-                        <li class="orders__item has-shadow has-background-info p-3 m-2">
-                            <h1 class="has-text-black is-size-4">Order - # <%= order._id %></h1>
-                            <ul class="orders__products">
-                                <% order.products.forEach(product => { %>
-                                    <li class="orders__products-item has-text-black is-size-4">Product - <%= product.product.title %> (<%= product.quantity %>)</li>
-                                    
-                                <% }); %>
-                            </ul>
-                        </li>
-                    <% }); %>
-                </ul>
-            <% } %>
-        </main>
-        <%- include('../includes/end.ejs') %>
+            <main>
+                <section>
+                    <div class="container py-3">
+
+
+                        <% if (orders.length <=0) { %>
+                            <h1>Nothing there!</h1>
+                            <% } else { %>
+                                <div>
+                                    <% orders.forEach(order=> { %>
+                                        <% let tprice=0; %>
+                                            <div class="has-shadow p-3 m-4 box">
+                                                <h1 class="has-text-black is-size-4">Order ----  <%= order._id %>
+                                                </h1>
+                                                <p class="has-text-black is-size-4">For ------- <%= order.user.fname %>
+                                                        <%= order.user.lname %>
+                                                </p>
+                                                <p class="has-text-black is-size-4">Contact -- <%= order.user.email %>
+                                                </p>
+                                                <hr>
+                                                <p class="has-text-black is-size-4">Items Ordered:</p>
+                                                <div class="orders__products">
+                                                    <% order.products.forEach(product=> { %>
+                                                        <p class="pl-3 has-text-black is-size-4"> › <%=
+                                                                product.product.title %> (<%= product.quantity %>)</p>
+                                                        <% tprice +=(product.product.price * product.quantity)%>
+                                                            <% }); %>
+                                                </div>
+                                                <p class="has-text-black is-size-4">Total Price: $<%=tprice %>
+                                                </p>
+                                            </div>
+                                            <% }); %>
+                                </div>
+                                <% } %>
+                    </div>
+                </section>
+            </main>
+            <%- include('../includes/end.ejs') %>

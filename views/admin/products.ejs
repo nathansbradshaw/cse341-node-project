@@ -2,44 +2,50 @@
     <link rel="stylesheet" href="/css/product.css">
     </head>
 
-    <body>
+    <body class="has-background-grey-light">
         <%- include('../includes/navigation.ejs') %>
 
             <main>
-                <% if (prods.length> 0) { %>
-                    <div class="grid">
-                        <% for (let product of prods) { %>
-                            <article class="card product-item">
-                                <header class="card__header">
-                                    <h1 class="product__title">
-                                        <%= product.title %>
-                                    </h1>
-                                </header>
-                                <div class="image is-5by4">
-                                    <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
-                                </div>
-                                <div class="card__content">
-                                    <h2 class="product__price">$
-                                        <%= product.price %>
-                                    </h2>
-                                    <p class="product__description">
-                                        <%= product.description %>
-                                    </p>
-                                </div>
-                                <div class="card__actions">
-                                    <a href="/admin/edit-product/<%= product._id %>?edit=true" class="btn">Edit</a>
-                                    <form action="/admin/delete-product" method="POST">
-                                        <input type="hidden" value="<%= product._id %>" name="productId">
-                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                        <button class="btn" type="submit">Delete</button>
-                                    </form>
+                <div class="flex-box">
+                    <% if (prods.length> 0) { %>
+                        <div class="flex-box">
+                            <% for (let product of prods) { %>
+                                <div class="card product-item card-parent">
+                                    <header class="card-header">
+                                        <h1 class="card-header-title is-centered">
+                                            <%= product.title %>
+                                                <%= (product.isFeatured) ? "(Featured)" : "" %>
+                                        </h1>
+                                    </header>
+                                    <div class="image is-5by4">
+                                        <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
+                                    </div>
+                                    <div class="card-content">
+                                        <h2 class="has-text-centered">$
+                                            <%= product.price %>
+                                        </h2>
+                                        <p class="">
+                                            <%= product.description %>
+                                        </p>
+                                    </div>
+                                    <div class="card-footer px-1 py-1 card-flex-footer flex-spaced">
+                                        <a href="/admin/edit-product/<%= product._id %>?edit=true"
+                                            class="button is-info">Edit</a>
+                                        <form action="/admin/delete-product" method="POST">
+                                            <input type="hidden" value="<%= product._id %>" name="productId">
+                                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                            <button class="button is-danger" type="submit">Delete</button>
+                                        </form>
 
+                                    </div>
                                 </div>
-                            </article>
-                            <% } %>
-                    </div>
-                    <% } else { %>
-                        <h1>No Products Found!</h1>
-                        <% } %>
+
+
+                                <% } %>
+                                    <% } else { %>
+                                        <h1>No Products Found!</h1>
+                             <% } %>
+                        </div>
+                </div>
             </main>
             <%- include('../includes/end.ejs') %>
