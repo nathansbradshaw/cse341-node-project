@@ -15,22 +15,26 @@
                 <%= errorMessage %>
               </div>
               <% } %>
-                <form class="login-form" action="/login" method="POST">
-                  <div class="form-control">
-                    <label for="email">Email</label>
-                    <input type="email" name="email" id="email">
+                <form class="signup-form" action="/login" method="POST">
+                  <div class="field">
+                    <label class="label" for="email">Email</label>
+                    <input class="input <%= validationErrors.find(e => e.param === 'email') ? 'is-danger' : 'is-success' %>"
+                      type="email" name="email" id="email" value="<%= oldInput.email %>">
                   </div>
-                  <div class="form-control">
-                    <label for="password">Password</label>
-                    <input type="password" name="password" id="password">
+                  <div class="field">
+                    <label class="label" for="password">Password</label>
+                    <input class="input <%= validationErrors.find(e => e.param === 'password') ? 'is-danger' : 'is-success' %>"
+                      type="password" name="password" id="password" value="<%= oldInput.password %>">
+                  </div>
+                  <div class="mb-2">
+                    <a  href="/reset">Reset Password</a>
                   </div>
 
                   <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                  <button class="btn" type="submit">Login</button>
+                  <button class="mt-3 button is-success" type="submit">Login</button>
+
                 </form>
-                <div>
-                  <a href="/reset">Reset Password</a>
-                </div>
+
           </div>
         </div>
 

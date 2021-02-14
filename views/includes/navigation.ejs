@@ -29,12 +29,12 @@
                         Product
                     </a>
                     <a class=" navbar-item <%= path === '/admin/products' ? 'active' : '' %>"
-                        href="/admin/products">Admin
-                        Products
+                        href="/admin/products">
+                        <%= (isAdmin) ? "Admin Products" : username + "'s Products" %>
                     </a>
                     <form class=" navbar-tem" action="/logout" method="post">
                         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                        <button class="button navbar-item">Logout</button> </form>
+                        <button class="button navbar-item is-primary">Logout</button> </form>
                     <% } else { %>
                         <a class=" navbar-item <%= path === '/login' ? 'active' : '' %>" href="/login">login </a>
                         <a class=" navbar-item <%= path === '/signup' ? 'active' : '' %>" href="/signup">signup 
