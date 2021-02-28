@@ -26,4 +26,8 @@ router.post('/create-order', isAuth, shopController.postOrder);
 
 router.get('/orders', isAuth, shopController.getOrders);
 
+router.get('/pagination', shopController.getPagination);
+
+router.post('/pagination', shopController.postPagination);
+
 module.exports = router;

@@ -1,0 +1,66 @@
+<%- include('../includes/head.ejs') %>
+   <link rel="stylesheet" href="/css/product.css">
+   </head>
+
+   <body class="has-background-grey-light">
+      <%- include('../includes/navigation.ejs') %>
+
+         <section class="hero is-medium is-info is-bold">
+            <div class="hero-body">
+               <div class="container">
+                  <h1 class="title is-size-1 has-text-white">
+                     "The Shop"
+                  </h1>
+                  <h2 class="subtitle has-text-white">
+                     The place to get all that random stuff that you just don't need!
+                  </h2>
+               </div>
+            </div>
+         </section>
+         <div
+            class="has-text-centered has-background-info-light has-text-white box is-size-1 is-not-rounded has-shadow">
+            <h2 class="is-title  ">Random Stuuff</h2>
+         </div>
+         <div class="container">
+            <div class="section">
+
+               <main class="is-primary">
+                  <div class="container">
+                     <h1>JSON Results</h1>
+                     <% for(var i=0; i<data.length; i++) {%>
+                                 <div class="card product-item card-parent">
+                                    <header class="card-header">
+                                       <h1 class="card-header-title is-centered">
+                                          <%= data[i].name%>
+                                       </h1>
+                                    </header>
+                                    <div class="image is-5by4">
+                                       <img src="<%= data[i].imageUrl %>" alt="image">
+                                    </div>
+                                    <div class="card-content">
+                                       <h2 class="product-price">Price: $<%= data[i].price %>
+                                       </h2>
+                                       <hr>
+                                       <p class="product-description">
+                                          <%=data[i].description %>
+                                       </p>
+                                    </div>
+
+
+
+                           </div>
+                           <% } %>
+
+                  </div>
+                  <!-- Pagination button generation -->
+                  <form class="actions container">
+                     <% for(var i=1; i <=numPages; i++) { %>
+                        <a href="?page=<%= i %><%= (searchedValue) ? `&searchValue=${searchedValue}` :  "" %>"
+                           class="btn <%= (page==i) ? 'btn-primary' : 'btn-default' %>">
+                           <%= i %>
+                        </a>
+                        <% } %>
+                           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            </div>
+            </main>
+            <%- include('../includes/end.ejs') %>
