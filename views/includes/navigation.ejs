@@ -15,6 +15,7 @@
         <div class="navbar-item">
             <a class="navbar-item <%= path === '/' ? 'active' : '' %>" href="/">Shop</a>
             <a class="navbar-item <%= path === '/products' ? 'active' : '' %>" href="/products">Products</a>
+            <a class="navbar-item <%= path === '/pagination' ? 'active' : '' %>" href="/pagination">pagination</a>
             <% if (isAuthenticated) { %>
                 <a class="navbar-item <%= path === '/cart' ? 'active' : '' %>" href="/cart">Cart</a>
                 <a class="navbar-item <%= path === '/orders' ? 'active' : '' %>" href="/orders">Orders</a>
