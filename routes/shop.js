@@ -30,4 +30,7 @@ router.get('/pagination', shopController.getPagination);
 
 router.post('/pagination', shopController.postPagination);
 
+router.get('/pokemon', shopController.getPokemon);
+
+
 module.exports = router;

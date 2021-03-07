@@ -1,6 +1,8 @@
 const https = require('https');
 const Product = require('../models/product');
 const Order = require('../models/order');
+const fetch = require('node-fetch');
+const { off } = require('gulp');
 
 
 exports.getProducts = (req, res, next) => {
@@ -252,4 +254,20 @@ exports.processJson = (req, res, next) => {
   }).on("error", (error) => {
     console.error(error.message);
   });
+}
+
+
+exports.getPokemon = (req, res, next) => { 
+  let offset = 0;
+  let limit = 10;
+  let jsonData
+  fetch('https://pokeapi.co/api/v2/pokemon?offset='+ offset + '&limit=10')
+    .then(res => res.json())
+    .then(json => {jsonData = json
+      res.render('shop/pokemon', {
+        path: '/pokemon',
+        pageTitle: 'pokemon',
+        
+      })
+    });
 }
