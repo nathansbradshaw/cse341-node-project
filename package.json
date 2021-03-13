@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js",
     "watch": "nodemon --ext js,pug,ejs,css,scss",
-    "start-server": "node app.js"
+    "start-server": "node app.js",
+    "heroku-prebuild": "npm install -f"
   },
   "author": "Maximilian Schwarzmüller",
   "license": "ISC",
