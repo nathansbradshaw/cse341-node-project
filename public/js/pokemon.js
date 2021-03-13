@@ -7,7 +7,7 @@ let previous = null;
 
 function populateList(url){
    fetchData(url).then(jsonData => {
-      console.log(jsonData)
+      // console.log(jsonData)
       clearList();
       jsonData.results.forEach(element => {
          list.innerHTML += `<li>${element.name}</li>`
@@ -55,7 +55,7 @@ const getNextAndPrevious = (json) => {
 }
 
 const populateNext = () => {
-   console.log("button pressed")
+   // console.log("button pressed")
    if (next !== null) {
        populateList(next)
    } else {
@@ -64,7 +64,7 @@ const populateNext = () => {
 }
 
 const populatePrev = () => {
-   console.log("button prev")
+   // console.log("button prev")
    if (previous !== null) {
        populateList(previous)
    } else {
