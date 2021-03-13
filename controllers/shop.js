@@ -2,7 +2,6 @@ const https = require('https');
 const Product = require('../models/product');
 const Order = require('../models/order');
 const fetch = require('node-fetch');
-const { off } = require('gulp');
 
 
 exports.getProducts = (req, res, next) => {
@@ -163,7 +162,7 @@ exports.postCartRemoveOne = (req, res, next) => {
       return req.user.removeOneFromCart(product);
     })
     .then(result => {
-      console.log(result);
+      // console.log(result);
       res.redirect('/cart');
     }).catch(err => {
       const error = new Error(err);
@@ -208,7 +207,7 @@ exports.getPagination = (req, res, next) => {
     const filteredData = global.jsonResponse.filter(x =>
       x.name.toLowerCase().includes(searchedValue.toLowerCase())
   )
-    console.log(filteredData)
+    // console.log(filteredData)
     res.render('shop/pagination', {
       data: filteredData.slice(indexStart, indexEnd),
       path: '/pagination',
